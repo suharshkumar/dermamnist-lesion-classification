@@ -1,0 +1,429 @@
+{
+ "entries": [
+  {
+   "method": "Wu & Papiez 2025 (arXiv 2501.14685, v1 only, 24 Jan 2025, PDF header 'Under Review for MIDL 2025', no code, not found on OpenReview/PMLR): DINOv2 ViT-B/14 (LVD-142M self-supervised) end-to-end fine-tune with a 1-layer linear head. Stated recipe: AdamW; 15,000 iterations; head LR 1e-3 decayed x0.9 every 200 iterations; encoder LR held constant, grid {1e-3,1e-4,1e-5} for CNNs / {1e-4,1e-5,1e-6} for ViTs, best ~1e-4 (CNN) and ~1e-5 (ViT); cross-entropy; 3 runs on one A100; mean\u00b1std. NOT stated anywhere: batch size, epochs, weight decay, augmentation, EMA, TTA, ensembling, validation-set use, early stopping, checkpoint rule, resize method for 224.",
+   "resolution": "224 (MedMNIST 224 release; 'We primarily use images of 224x224 for testing')",
+   "top1": "92.02 \u00b1 0.32",
+   "auc": "98.92 \u00b1 0.11 (macro)",
+   "split": "Official MedMNIST split implied (paper never states split sizes or how val/test were used)",
+   "source": "https://arxiv.org/abs/2501.14685 (main 224 table and App. C/D read via https://arxiv.org/html/2501.14685v1)",
+   "verified": true,
+   "caveat": "Number verified in the primary text; protocol NOT auditable. The paper never mentions a validation split, early stopping or checkpoint selection; 'best end-to-end fine-tuning results' means the best encoder LR per dataset, picked from accuracy-vs-LR curves (App. B) whose data split is unlabeled, so test-set selection cannot be excluded. Two different 28/64/128 tables are printed (Sec. 4 vs App. D) with conflicting values (DINOv2@128: 91.19 vs 87.35; ResNet-18@28: 79.83 vs 77.71) and no explanation. Same-backbone results are 3-12 points above MedMNIST+ (attributed by the authors only to 'a different training pipeline'). Treat as plausible-but-unaudited; cite with these caveats or omit."
+  },
+  {
+   "method": "Wu & Papiez 2025: OpenAI ViT-B/16 (image-text pretrained) end-to-end; same recipe as the DINOv2 row.",
+   "resolution": "224",
+   "top1": "89.74 \u00b1 0.52",
+   "auc": "98.08 \u00b1 0.27",
+   "split": "official (implied)",
+   "source": "https://arxiv.org/abs/2501.14685",
+   "verified": true,
+   "caveat": "Same protocol caveats as the DINOv2 row."
+  },
+  {
+   "method": "Wu & Papiez 2025: CLIP ViT-B/16 (LAION-2B -> IN-12k -> IN-1k) end-to-end; same recipe.",
+   "resolution": "224",
+   "top1": "89.64 \u00b1 0.31",
+   "auc": "98.31 \u00b1 0.05",
+   "split": "official (implied)",
+   "source": "https://arxiv.org/abs/2501.14685",
+   "verified": true,
+   "caveat": "Same protocol caveats as the DINOv2 row. Note MedMNIST+ got only 75.31 for CLIP ViT-B/16 end-to-end."
+  },
+  {
+   "method": "Wu & Papiez 2025: ViT-B/16 (IN-21k -> IN-1k supervised) end-to-end; same recipe.",
+   "resolution": "224",
+   "top1": "89.49 \u00b1 0.24",
+   "auc": "98.25 \u00b1 0.16",
+   "split": "official (implied)",
+   "source": "https://arxiv.org/abs/2501.14685",
+   "verified": true,
+   "caveat": "Same protocol caveats. Independent corroboration exists: Sanap 2026 single ViT-Base 90.57 (single seed) and MedMNIST+ ViT-B/16 82.31 (no aug, val-loss early stop)."
+  },
+  {
+   "method": "Wu & Papiez 2025: DINO ViT-B/16 (IN-1k SSL) end-to-end; same recipe.",
+   "resolution": "224",
+   "top1": "89.39 \u00b1 0.12",
+   "auc": "98.04 \u00b1 0.21",
+   "split": "official (implied)",
+   "source": "https://arxiv.org/abs/2501.14685",
+   "verified": true,
+   "caveat": "Same protocol caveats. MedMNIST+ end-to-end DINO = 81.31, linear probe 84.42."
+  },
+  {
+   "method": "Wu & Papiez 2025: EVA-02 ViT-B/14 (IN-22k) end-to-end; same recipe.",
+   "resolution": "224",
+   "top1": "88.79 \u00b1 0.45",
+   "auc": "94.45 \u00b1 1.27",
+   "split": "official (implied)",
+   "source": "https://arxiv.org/abs/2501.14685",
+   "verified": true,
+   "caveat": "Same protocol caveats; note the unusually low AUC relative to ACC for EVA-02 in both of their tables. MedMNIST+ EVA-02 end-to-end = 77.94."
+  },
+  {
+   "method": "Wu & Papiez 2025: SAM-C ViT-B/16 (IN-1k) end-to-end; same recipe. (Plain SAM ViT-B/16 (SA-1B) = 80.62 \u00b1 0.46 / AUC 88.53, below threshold.)",
+   "resolution": "224",
+   "top1": "88.43 \u00b1 0.07",
+   "auc": "96.49 \u00b1 0.41",
+   "split": "official (implied)",
+   "source": "https://arxiv.org/abs/2501.14685",
+   "verified": true,
+   "caveat": "Same protocol caveats."
+  },
+  {
+   "method": "Wu & Papiez 2025: EfficientNet-B4 (IN-1k) end-to-end; same recipe (encoder LR ~1e-4).",
+   "resolution": "224",
+   "top1": "88.13 \u00b1 0.49",
+   "auc": "97.44 \u00b1 0.07",
+   "split": "official (implied)",
+   "source": "https://arxiv.org/abs/2501.14685",
+   "verified": true,
+   "caveat": "Same protocol caveats. Largest discrepancy with MedMNIST+ (76.38 \u00b1 1.29 for the same backbone), i.e. +11.8 points; EfficientNets appear very sensitive to the recipe (relevant to this project's EfficientNet members)."
+  },
+  {
+   "method": "Wu & Papiez 2025: DenseNet-121 (IN-1k) end-to-end; same recipe.",
+   "resolution": "224",
+   "top1": "87.68 \u00b1 0.75",
+   "auc": "96.49 \u00b1 0.37",
+   "split": "official (implied)",
+   "source": "https://arxiv.org/abs/2501.14685",
+   "verified": true,
+   "caveat": "Same protocol caveats. MedMNIST+ DenseNet-121 = 84.74 \u00b1 0.51 (their best)."
+  },
+  {
+   "method": "Wu & Papiez 2025: ResNet-18 (IN-1k) end-to-end; same recipe. (Literature notes previously listed 'ResNet-18 @64->224 84.80 \u00b1 1.09'; 84.80 is the 64-px value in their Sec. 4 table, not a 224 result.)",
+   "resolution": "224",
+   "top1": "86.05 \u00b1 0.78",
+   "auc": "96.62 \u00b1 0.32",
+   "split": "official (implied)",
+   "source": "https://arxiv.org/abs/2501.14685",
+   "verified": true,
+   "caveat": "Same protocol caveats. Corroborated by LiteMed-ViT 2026 (ResNet-18@224 89.98, 30 epochs) and a GitHub ResNet-50 run (86.9); MedMNIST+ gives 82.33."
+  },
+  {
+   "method": "Wu & Papiez 2025: VGG16 (IN-1k) end-to-end; same recipe.",
+   "resolution": "224",
+   "top1": "85.49 \u00b1 0.32",
+   "auc": "96.17 \u00b1 0.55",
+   "split": "official (implied)",
+   "source": "https://arxiv.org/abs/2501.14685",
+   "verified": true,
+   "caveat": "Same protocol caveats."
+  },
+  {
+   "method": "Wu & Papiez 2025: LINEAR PROBES at 224 (frozen encoder, head LR 1e-3 step-decayed, 15k it): DINO ViT-B/16 84.87\u00b10.36 (AUC 97.06\u00b10.02); DINOv2 ViT-B/14 83.97\u00b10.08 (96.62\u00b10.02); ViT-B/16 83.40\u00b10.26 (96.45\u00b10.01); SAM-C 83.04\u00b10.08 (96.49\u00b10.02); OpenAI ViT-B/16 82.80\u00b10.23 (96.14\u00b10.04); EVA-02 82.70\u00b10.20 (96.09\u00b10.02); CLIP 82.36\u00b10.16 (96.11\u00b10.05). CNN probes 72-78.",
+   "resolution": "224",
+   "top1": "82.36 - 84.87 (see method)",
+   "auc": "96.09 - 97.06",
+   "split": "official (implied)",
+   "source": "https://arxiv.org/abs/2501.14685",
+   "verified": true,
+   "caveat": "Linear-probe numbers agree closely with MedMNIST+ (DINO LP 84.42, ViT LP 82.01, CLIP LP 81.93), which supports that the datasets/eval are the same and that the end-to-end gap is purely a recipe effect."
+  },
+  {
+   "method": "Wu & Papiez 2025 @128 px, end-to-end (two conflicting tables; App. D value first, Sec. 4 'scaling vs padding' table in parentheses; paper does not label which is scale/pad): DINOv2 87.35/97.60 (91.19/98.63); OpenAI ViT-B 87.22/97.12 (89.33/98.00); CLIP 86.93/97.51 (89.21/98.13); VGG16 86.80/96.96 (85.35/96.10); ViT-B/16 86.32/97.37 (88.66/98.02); EVA-02 85.89/92.17 (87.65/92.63); DenseNet-121 85.60/95.69 (86.57/96.43); DINO 85.34/97.10 (88.10/97.72); SAM-C 85.07/95.30 (87.48/96.89); EfficientNet-B4 84.74/95.87 (86.37/96.75); ResNet-18 84.22/95.26 (85.80/96.46); SAM 78.34 (79.98). LP@128 >=82 only DINO 82.78 (84.56); ViT-B 81.91 (82.61); DINOv2 81.88 (82.61). Text: 'scaling tends to yield better accuracy than zero-padding across all image sizes' and 64/128/224 differences are small.",
+   "resolution": "128 (MedMNIST+ 128 files, resized or padded to the model input)",
+   "top1": "84.22 - 87.35 (App. D) or 85.80 - 91.19 (Sec. 4 table); ACC/AUC pairs in method",
+   "auc": "see method",
+   "split": "official (implied)",
+   "source": "https://arxiv.org/html/2501.14685v1 (Sec. 4.1 table and Appendix D table)",
+   "verified": true,
+   "caveat": "Numbers verified but internally inconsistent; no stds printed in either resolution table; same protocol caveats. Still the only published 128-px end-to-end numbers above 82 on the official split; MedMNIST+ has none >= 82 at 128 (best VGG16 81.80, DenseNet 81.76, DINO-LP 81.65)."
+  },
+  {
+   "method": "MedMNIST+ benchmark (Doerrich, Di Salvo, Brockmann, Ledig; Sci Rep 15:7669, 2025; arXiv 2404.15786): DenseNet-121 (timm 'densenet121', ImageNet-1k, pretrained=True) end-to-end. Recipe VERIFIED FROM CODE (train.py/config.yaml/evaluate.py): timm AdamW lr 1e-4 (weight decay not set -> timm default 1e-2), CosineLRScheduler t_initial=100 epochs single cycle no warmup, batch 64 (eval 256), max 100 epochs with early stopping on VALIDATION LOSS patience 5, '_best.pth' (lowest val loss) evaluated once on the test split, CE loss, NO augmentation at all (ToTensor -> Normalize(timm default_cfg mean/std) -> zero-Pad to 224 after normalization; lower resolutions are zero-padded to 224, not resized), no TTA/EMA/mixup/label smoothing, 3 seeds (9930641, 115149041, 252139603), medmnist package with size=, RTX A5000. Architecture tags: vgg16, alexnet (torchvision), resnet18, densenet121, efficientnet_b4, vit_base_patch16_224, vit_base_patch16_clip_224, eva02_base_patch16_clip_224, vit_base_patch16_224.dino, samvit_base_patch16.",
+   "resolution": "224 (native MedMNIST+ dermamnist_224.npz)",
+   "top1": "84.74 \u00b1 0.51",
+   "auc": "96.26 \u00b1 0.06",
+   "split": "official 7,007 / 1,003 / 2,005",
+   "source": "https://arxiv.org/abs/2404.15786 (Supplementary Table S4) ; https://doi.org/10.1038/s41598-025-92156-9 ; code https://github.com/sdoerrich97/rethinking-model-prototyping-MedMNISTPlus (train.py, config.yaml, evaluate.py)",
+   "verified": true,
+   "caveat": "Best MedMNIST+ result. The combination of zero augmentation and val-loss early stopping with patience 5 very likely under-trains (val loss rises from overfitting long before accuracy peaks), which is the most plausible reason every later 224-px paper beats these numbers by 4-8 points with the same backbones (inference, not stated by the authors). Full 128/224 columns of Table S4 for all 10 backbones incl. AUC, LP and kNN are reproduced in notes."
+  },
+  {
+   "method": "MedMNIST+ (Doerrich et al. 2025): ResNet-18 end-to-end, same recipe as the DenseNet-121 row.",
+   "resolution": "224",
+   "top1": "82.33 \u00b1 0.36",
+   "auc": "95.27 \u00b1 0.27",
+   "split": "official",
+   "source": "https://arxiv.org/abs/2404.15786 (Table S4)",
+   "verified": true,
+   "caveat": "At 128 px the same model gives 79.19 \u00b1 0.51 / AUC 93.46 (image zero-padded to 224, not resized)."
+  },
+  {
+   "method": "MedMNIST+ (Doerrich et al. 2025): ViT-B/16 (timm vit_base_patch16_224, IN-21k->1k) end-to-end, same recipe.",
+   "resolution": "224",
+   "top1": "82.31 \u00b1 1.36",
+   "auc": "96.28 \u00b1 0.67",
+   "split": "official",
+   "source": "https://arxiv.org/abs/2404.15786 (Table S4)",
+   "verified": true,
+   "caveat": "128 px: 80.81 \u00b1 0.89 / 95.89 \u00b1 0.30."
+  },
+  {
+   "method": "MedMNIST+ (Doerrich et al. 2025): AlexNet (torchvision, IN-1k) end-to-end, same recipe.",
+   "resolution": "224",
+   "top1": "82.04 \u00b1 1.19",
+   "auc": "96.10 \u00b1 0.09",
+   "split": "official",
+   "source": "https://arxiv.org/abs/2404.15786 (Table S4)",
+   "verified": true,
+   "caveat": "128 px: 80.42 \u00b1 0.75 / 95.13."
+  },
+  {
+   "method": "MedMNIST+ (Doerrich et al. 2025): LINEAR PROBING, same optimizer/schedule, encoder frozen: DINO ViT-B/16 (vit_base_patch16_224.dino) 84.42 \u00b1 0.23 (AUC 96.83 \u00b1 0.07); ViT-B/16 82.01 \u00b1 0.02 (95.88 \u00b1 0.03); CLIP ViT-B/16 81.93 \u00b1 0.31 (95.92 \u00b1 0.06, just below threshold). kNN (k=11, cosine) best: DINO 78.35 @224.",
+   "resolution": "224",
+   "top1": "84.42 \u00b1 0.23 (DINO LP); 82.01 \u00b1 0.02 (ViT-B/16 LP)",
+   "auc": "96.83 \u00b1 0.07; 95.88 \u00b1 0.03",
+   "split": "official",
+   "source": "https://arxiv.org/abs/2404.15786 (Table S4)",
+   "verified": true,
+   "caveat": "DINO linear probe beats every MedMNIST+ end-to-end ViT and all but DenseNet-121, i.e. their end-to-end ViT fine-tuning is clearly under-optimized."
+  },
+  {
+   "method": "Sanap, 'Beyond accuracy: calibration and uncertainty in multi-architecture ensembles for MedMNIST classification', Neural Computing & Applications 38:776 (03 Oct 2026): 'Rigorous Stacking' ensemble = MLP meta-learner (Dense64-ReLU, dropout 0.5, Dense32, softmax; trained on the 1,003 validation-set predictions, 10% held out for its own early stopping) over ConvNeXt-Base + ViT-Base + EfficientNetV2-M + InceptionResNetV2, each ImageNet-pretrained and fine-tuned end-to-end in TensorFlow/Keras: Adam (0.9/0.999), LR 2e-5 (ViT) / 1e-4 (CNNs), BATCH SIZE 4, <=30 epochs, EarlyStopping on validation ACCURACY patience 7 restore-best, ReduceLROnPlateau on val loss (x0.5 after 3, floor 1e-6), mixed precision, categorical CE, NO augmentation, no class re-weighting, no TTA, single seed 42 / single run.",
+   "resolution": "224 (MedMNIST+ 224 release 'used directly')",
+   "top1": "91.67",
+   "auc": "0.9801 macro (0.9774 weighted); macro recall (= balanced acc) 0.8487; macro-F1 0.8729; ECE 0.0299; log-loss 0.300",
+   "split": "official MedMNIST v2 partitions 'used without modification'",
+   "source": "https://link.springer.com/article/10.1007/s00521-026-12521-1 ; per-model metrics from https://github.com/HrushiSanap/medmnist_ensemble_study/blob/main/results/dermamnist/dermamnist_summary_metrics.csv (test softmax outputs published as .npy)",
+   "verified": true,
+   "caveat": "Single seed, batch size 4, stacking fits on validation predictions; compares against the MedMNIST v2 number (76.80 Google AutoML) rather than MedMNIST+. Paywalled; numbers taken from Sec. 3.4 text plus the repo CSV (Table 6 itself not extracted). Still the only source publishing saved test probabilities - the protocol this project wants."
+  },
+  {
+   "method": "Sanap 2026: Soft Voting (unweighted mean of the four probability vectors), same members/recipe.",
+   "resolution": "224",
+   "top1": "90.92",
+   "auc": "0.9877 macro; macro recall 0.8331; macro-F1 0.8651; ECE 0.0163 (best calibration); log-loss 0.276; PR-AUC macro 0.922",
+   "split": "official",
+   "source": "https://link.springer.com/article/10.1007/s00521-026-12521-1 ; repo CSV",
+   "verified": true,
+   "caveat": "Single seed."
+  },
+  {
+   "method": "Sanap 2026: single ViT-Base (ImageNet weights; Adam 2e-5, batch 4, early stop on val acc, no augmentation).",
+   "resolution": "224",
+   "top1": "90.57",
+   "auc": "0.9821 macro; macro recall 0.8319; macro-F1 0.8541; ECE 0.0725; melanoma recall 0.7489",
+   "split": "official",
+   "source": "repo CSV https://github.com/HrushiSanap/medmnist_ensemble_study (results/dermamnist) + paper Sec. 3.4",
+   "verified": true,
+   "caveat": "Single seed; strongest single model with an honest-looking protocol (val-acc early stopping) found in this survey."
+  },
+  {
+   "method": "Sanap 2026: single ConvNeXt-Base (ImageNet weights; Adam 1e-4, batch 4, no augmentation).",
+   "resolution": "224",
+   "top1": "89.48",
+   "auc": "0.9820 macro; macro recall 0.7877; macro-F1 0.8157; ECE 0.0720",
+   "split": "official",
+   "source": "repo CSV + paper Sec. 3.4",
+   "verified": true,
+   "caveat": "Single seed."
+  },
+  {
+   "method": "Sanap 2026: single EfficientNetV2-M (ImageNet weights; Adam 1e-4, batch 4, no augmentation).",
+   "resolution": "224",
+   "top1": "88.08",
+   "auc": "0.9747 macro; macro recall 0.7988; macro-F1 0.7919; ECE 0.0933",
+   "split": "official",
+   "source": "repo CSV + paper Sec. 3.4",
+   "verified": true,
+   "caveat": "Single seed."
+  },
+  {
+   "method": "Sanap 2026: single InceptionResNetV2 (ImageNet weights).",
+   "resolution": "224",
+   "top1": "82.74",
+   "auc": "0.9144 macro; macro recall 0.6260; macro-F1 0.6555",
+   "split": "official",
+   "source": "repo CSV + paper Sec. 3.4",
+   "verified": true,
+   "caveat": "Single seed; weakest member."
+  },
+  {
+   "method": "Tanvir, 'A Hybrid Transformer-CNN Framework with Early and Late Fusion for Robust Skin Lesion Classification', Int. J. Computer Applications 187(51), Oct 2025 (single-author, low-tier venue). Models: Swin-B (IN-1k), ConvNeXt-B (ImageNet), ViT-B/16 (IN-21k) via timm 0.9.2, heads replaced; Late Fusion = mean of Swin-B and ConvNeXt-B softmax; Early Fusion = concat penultimate features (2x1024) -> FC512-ReLU-dropout0.3 -> FC7. Recipe: AdamW wd 1e-2, fixed LR 1e-4 with 1% linear warmup, CE, <=20 epochs, batch 32, early stopping on validation patience 2, NO augmentation, normalize to [-1,1], seed 42 single run, NVIDIA L4. Results (test, weighted P/R/F1): Late Fusion 0.895 (0.873/0.805/0.832); Swin-B 0.893 (0.829/0.820/0.822); Early Fusion 0.891 (0.813/0.838/0.822); ViT-B 0.873 (0.833/0.751/0.774); ConvNeXt-B 0.871 (0.777/0.703/0.731).",
+   "resolution": "224 ('higher-resolution variant of DermaMNIST with images resized to 224x224')",
+   "top1": "89.5 (late fusion); 89.3 (Swin-B); 87.3 (ViT-B); 87.1 (ConvNeXt-B)",
+   "auc": "not reported; balanced accuracy derived by me from their late-fusion confusion matrix = 0.806 (AKIEC 43/66, BCC 94/103, BKL 150/220, DF 16/23, MEL 162/223, NV 1301/1341, VASC 29/29; total 1795/2005 = 0.895 checks)",
+   "split": "official (their Table 1 sums to 7,007/1,003/2,005 although the text says 993/2,015)",
+   "source": "https://www.ijcaonline.org/archives/volume187/number51/tanvir-2025-ijca-925852.pdf (PDF read in full)",
+   "verified": true,
+   "caveat": "Single seed (the conclusion quotes '0.895 \u00b1 0.008' without explaining); no AUC; weak venue; compares only to the v2 AutoML baseline 0.768. Useful mainly as independent evidence that Swin-B/ConvNeXt-B/ViT-B at 224 with no augmentation land at 87-89."
+  },
+  {
+   "method": "Shehu et al., 'Promise and Limits of Cross-Architecture Knowledge Distillation for Lightweight Medical ViTs (LiteMed-ViT)', arXiv 2610.33520 (24 Oct 2026): resolution study, ResNet-18 retrained at 28/64/128/224 px from MedMNIST+ for 30 epochs, 'one or two seeds per size' (runs differ by up to 1.6 pts). Main-protocol settings (assumed to carry over): ImageNet-pretrained, AdamW 3e-4, wd 1e-4, cosine, batch 128, geometry-only augmentation (h-flip, rotation <=15 deg), normalize 0.5/0.5; 'Every choice of architecture and hyperparameter is made on the official validation split', test evaluated once.",
+   "resolution": "224 (MedMNIST+); 28 px = 77.38 (64/128 values not printed)",
+   "top1": "89.98 (ResNet-18)",
+   "auc": "not reported; balanced accuracy not reported for this study (main 28-px table reports BA, e.g. ResNet-18 59.86 \u00b1 2.16 at 28 px)",
+   "split": "official 7,007 / 1,003 / 2,005",
+   "source": "https://arxiv.org/abs/2610.33520 (Sec. IV text; no table for the resolution study)",
+   "verified": true,
+   "caveat": "1-2 seeds, values only in prose; but it is a second independent ResNet-18@224 result far above MedMNIST+ (82.33) and above Wu & Papiez (86.05), using flips+rotation and no early stopping on val loss."
+  },
+  {
+   "method": "BiomedGPT (Zhang et al., Nature Medicine 30:3129-3141, 2024; arXiv 2305.17100): generative VL foundation model fine-tuned for image classification on 'MedMNIST-Raw' (dermatoscopy source = HAM10000). Extended Data Table 1 (PMC copy): HAM10000/Dermatoscopy - prior SOTA MedViT-L 72.3 | BiomedGPT-S 66.9 | -M 67.6 | -B 86.6. Repo fine-tuning script scripts/image_cls/train_medmnist.sh: patch_image_size 384, 5 epochs, lr 5e-5, Adam wd 0.01, polynomial decay with warmup ratio 0.6, label smoothing 0.1, dropout 0.1, encoder/decoder drop-path 0.1, batch 64 x update_freq 4 (32 for base), best checkpoint by validation 'score'; data = a pre-processed 'MedMNIST (224x224)' Dropbox dump converted to PNG/TSV. Paper: 'For datasets with an official split, we selected the checkpoint that achieved the highest metric on the validation data'.",
+   "resolution": "224-px MedMNIST images fed at 384 (per repo); paper itself does not state the resolution",
+   "top1": "86.6 (BiomedGPT-B); later arXiv/'scaling-up' versions quote 87.2 (Large) and 88.2 (XLarge)",
+   "auc": "not reported",
+   "split": "NOT confirmed to be the official DermaMNIST split ('MedMNIST-Raw ... curated following ref. 37'); treat as non-comparable until checked",
+   "source": "https://doi.org/10.1038/s41591-024-03185-2 ; https://pmc.ncbi.nlm.nih.gov/articles/PMC12581140/ (Extended Data Table 1) ; https://github.com/taokz/BiomedGPT (scripts/image_cls/train_medmnist.sh, datasets.md)",
+   "verified": true,
+   "caveat": "Number verified in the PMC copy of the Nat Med paper; the S/M/B jump (67.6 -> 86.6) is odd and unexplained; split and image provenance are not stated in the paper; Wu & Papiez cite it as 86.6 alongside BiomedCLIP 71.9 and MedSAM 72.3 (both from the same BiomedGPT paper, not from those models' own papers)."
+  },
+  {
+   "method": "MKG-CARE (Xu et al., arXiv 2605.22547 v3, CIKM 2026): MedMamba image encoder + BioBERT-initialised multimodal knowledge graph + graph attention + confidence-calibrated refinement, with FAISS retrieval of training-set cases at test time. Recipe: AdamW 5e-5, wd 0.02, StepLR(25, 0.5), batch 64, <=40 epochs, early stopping on validation, dropout 0.2/0.4, CE, gradient clipping, no augmentation described. Same-table baselines (OA/AUC): KEM 81.7/95.8; MedMamba 77.9/91.7; Swin-T 77.8/93.8; EfficientNetV2 75.1/90.1; VMamba 70.3/89.0; ConvNeXt 67.0/91.9; Gemini-3-pro 75.6/85.9; GPT-5.1 72.7/84.3; medgemma-1.5-4b 54.9.",
+   "resolution": "224 (all inputs resized to 224x224x3)",
+   "top1": "83.6 (overall accuracy)",
+   "auc": "96.1 (macro)",
+   "split": "not specified (uses a validation set; 10,015 images / 7 classes stated)",
+   "source": "https://arxiv.org/abs/2605.22547 (Table read via https://arxiv.org/html/2605.22547)",
+   "verified": true,
+   "caveat": "Retrieval memory is built from training images, so same-lesion near-duplicates in the official split can be retrieved directly - a method that would specifically profit from the known leakage; split unstated. Vision-only baselines in its table are the old MedMamba-paper numbers (77-78), not the 2025-26 fine-tuning results."
+  },
+  {
+   "method": "MedNet (Ferdous et al., Sci Rep 15:41936, 2025): lightweight attention-augmented CNN (3.1-3.3 M params, optional CBAM, dropout 0.4). Recipe: AdamW 3e-4, wd 1e-4, cosine annealing T_max 20 / eta_min 1e-6, 70 epochs (figures show 50), batch 64, FOCAL LOSS (gamma/alpha not given), Albumentations augmentation (H/V flips p=0.5, brightness/contrast p=0.2, shift 10% / scale 10% / rotate 20 deg p=0.5, CLAHE p=0.2), seeds 42/43/44, 2x RTX A6000; no early-stopping statement. Table 1 DermaMNIST (AUC / ACC): with CBAM 384: 0.965\u00b10.0019 / 0.840\u00b10.0087; with CBAM 224: 0.953\u00b10.0074 / 0.810\u00b10.0066; with CBAM 28: 0.937\u00b10.0048 / 0.777\u00b10.0072; without CBAM 384: 0.960\u00b10.0033 / 0.800\u00b10.0044; without CBAM 224: 0.950\u00b10.0067 / 0.820\u00b10.0059; without CBAM 28: 0.890 / 0.758.",
+   "resolution": "224 and 384 (source resolution of the 224/384 inputs not stated: 'MedMNIST v2 (2D)')",
+   "top1": "82.0 \u00b1 0.59 (224, no CBAM); 81.0 \u00b1 0.66 (224, CBAM); 84.0 \u00b1 0.87 (384, CBAM)",
+   "auc": "0.950 / 0.953 (224); 0.965 (384)",
+   "split": "official implied (test per-class supports sum to 2,005; train/val sizes not given)",
+   "source": "https://doi.org/10.1038/s41598-025-25857-w ; full-text XML https://www.ebi.ac.uk/europepmc/webservices/rest/PMC12647811/fullTextXML ; https://pmc.ncbi.nlm.nih.gov/articles/PMC12647811/",
+   "verified": true,
+   "caveat": "Per-class table has nv/vasc supports swapped (223 vs 1341); macro-F1 ~0.71 and balanced accuracy ~0.69 derived from it; CBAM claim ('consistently better') contradicted by the 224 rows; cites the Wu & Papiez 92.02 uncritically."
+  },
+  {
+   "method": "UNPUBLISHED GitHub (mr-shakib/dermamnist-transfer-learning, student project): ResNet-50 ImageNet-pretrained, full fine-tuning with discriminative learning rates, weighted CE, 12 epochs, selection on validation only, 8-view TTA. Table (single view): ResNet-50 FT unweighted CE 86.9 acc / BA 71.8 / macro-F1 75.7 / AUC 0.971; ResNet-50 FT weighted CE 86.1 / BA 76.3 / F1 77.2 / AUC 0.955; EfficientNet-B0 FT 84.8 / BA 76.0 / F1 72.9 / AUC 0.959; gradual unfreeze 83.0 / BA 74.1; frozen backbones 75-77. Headline with 8-view TTA: 87.0 / BA 79.2 / macro-F1 80.1 / macro-AUC 0.962.",
+   "resolution": "224",
+   "top1": "87.0 (TTA); 86.9 / 86.1 single-view",
+   "auc": "0.962 (TTA); BA 79.2",
+   "split": "2,005-image test set (official implied)",
+   "source": "https://github.com/mr-shakib/dermamnist-transfer-learning",
+   "verified": true,
+   "caveat": "Not peer reviewed; optimizer/LR/augmentation only partly documented in the README. Included because its recipe (weighted CE + discriminative LRs + TTA) is close to this project's and quantifies the acc-vs-BA trade-off of class weighting (-0.8 acc, +4.5 BA) and of TTA (+0.1 acc, +2.9 BA)."
+  },
+  {
+   "method": "UNPUBLISHED GitHub (ChetanYarlagadda/medical-image-uncertainty): ResNet-18 ImageNet-pretrained on MedMNIST+ 64 px, dropout 0.5 head, AdamW 5e-4, wd 1e-4, one-cycle cosine, batch 128, <=12 epochs, bf16, augmentation = flips + 90-degree rotations + <=4-px shifts, early stopping on val NLL patience 3; 5-member deep ensemble + temperature scaling.",
+   "resolution": "64 (not 128/224; listed because it is the same source resolution as this project's Phase-2 data)",
+   "top1": "83.1 single model; 84.2 deep ensemble (5) + TS",
+   "auc": "0.965 single; 0.971 ensemble; balanced accuracy 0.689 / 0.693",
+   "split": "official 7,007 / 1,003 / 2,005",
+   "source": "https://github.com/ChetanYarlagadda/medical-image-uncertainty",
+   "verified": true,
+   "caveat": "Not peer reviewed. README explicitly flags the lesion-level leakage ('accuracy here is therefore likely optimistic'). Beats this project's 64-px-source ensemble (82.64) on top-1 with a much simpler recipe, though with lower balanced accuracy (69.3 vs 66.2 is similar)."
+  },
+  {
+   "method": "Alwakid et al., 'Graph Attention Networks for Skin Lesion Classification with CNN-Driven Node Features', Computers, Materials & Continua 86(1), 2026: SLIC superpixel region-adjacency graph per image, 1280-d EfficientNet-B0 node features, 5-layer GAT, NLL loss; augmentation tested and REJECTED (acc 0.745 with aug); ablation: DenseNet features 0.8712 acc / AUC 0.9426, ResNet-18 0.824 / 0.93; GIN 0.8745, GraphSAGE 0.8655, GCN 0.8700. Optimizer/LR/epochs/seeds not reported.",
+   "resolution": "224 (HAM10000 originals resized bicubically)",
+   "top1": "88.35",
+   "auc": "98.04; precision 0.886, recall 0.8835, F1 0.8835",
+   "split": "DermaMNIST-C (lesion-disjoint corrected split of Abhishek et al.), NOT the official split",
+   "source": "https://www.techscience.com/cmc/v86n1/64451/html (DOI 10.32604/cmc.2025.069162)",
+   "verified": true,
+   "caveat": "Not comparable to official-split numbers (DermaMNIST-C test is 1,227 images, lesion-disjoint, and generally scores higher: Abhishek ResNet-18@224 84.7). No hyperparameters, no seeds, inconsistent node counts; likely optimistic."
+  },
+  {
+   "method": "Context on the corrected splits (from existing literature notes + this survey): Abhishek, Jain, Hamarneh (Sci Data 12:196, 2025) DermaMNIST-C 224 ResNet-18 0.847 \u00b1 0.010 / AUC 0.953 \u00b1 0.001 (28 px: 0.825 \u00b1 0.006); DermaMNIST-E 224 ResNet-18 0.685 \u00b1 0.000 / 0.896 \u00b1 0.010; Kadric et al. (arXiv 2507.12961) DermaMNIST-C 224 EfficientNetV2-L frozen + dense head 0.8490 / AUC 0.9768 (original 28-px DermaMNIST 0.7017). Zenodo 12739457 (v1.1, June 2024) provides dermamnist_corrected_{28,224}.npz (20.7 MB / 1.1 GB), dermamnist_extended_{28,224}.npz (24.6 MB / 1.3 GB) and DermaMNIST-C.csv / DermaMNIST-E.csv metadata (no 64/128 files).",
+   "resolution": "224 (and 28)",
+   "top1": "84.7 (-C, ResNet-18); 84.9 (-C, EffNetV2-L frozen); 68.5 (-E, ResNet-18)",
+   "auc": "0.953 (-C); 0.896 (-E)",
+   "split": "DermaMNIST-C (8,215/573/1,227 lesion-disjoint) and DermaMNIST-E (train 10,015; val/test = ISIC 2018 val/test 193/1,511)",
+   "source": "https://arxiv.org/abs/2401.14497 ; https://doi.org/10.1038/s41597-025-04382-5 ; https://zenodo.org/records/12739457",
+   "verified": true,
+   "caveat": "Per Abhishek et al. benchmarks on the original split and on -C 'should not be compared'; -E is the only guaranteed leakage-free protocol and its numbers are far lower."
+  },
+  {
+   "method": "MedFuse (Ren, Hai, Gu, Liu; Frontiers in Medicine 13, 29 Sep 2026): dual-stream CNN + FROZEN vision foundation model (DINOv2-S/B/L, BEiTv2, Swin-T) with Adam LR 1e-3, batch 32, early stopping, CE, 3 runs; singles: ResNet-18 0.730/0.914, ResNet-50 0.733/0.910, DenseNet-121 0.737/0.913, ConvNeXt 0.735/0.911, DINOv2-ViT-S 0.679/0.829, DINOv2-ViT-B 0.671/0.810, BEiTv2 0.708/0.898, Swin-T 0.669/0.712; best fusion DenseNet-121 + DINOv2-B 0.747 \u00b1 0.001 / 0.916.",
+   "resolution": "224 (bilinear resize; native source resolution not stated)",
+   "top1": "67.1 - 74.7 (all below threshold)",
+   "auc": "0.81 - 0.92",
+   "split": "official MedMNIST v2 splits",
+   "source": "https://www.frontiersin.org/journals/medicine/articles/10.3389/fmed.2026.1901033/full",
+   "verified": true,
+   "caveat": "Listed for task (c): a 2026 DINOv2/ConvNeXt/Swin paper whose low numbers come from frozen VFMs + LR 1e-3 (likely 28-px upsampled inputs); shows that the backbone alone explains nothing without the fine-tuning recipe."
+  },
+  {
+   "method": "MedAlmighty (Ren, Gu, Liu; Frontiers in AI 8, 12 Aug 2025; DOI 10.3389/frai.2025.1527980): frozen DINOv2 ViT-S/B/L-14 + trained head (Adam 1e-3, batch 32, step decay at 50/75, no augmentation, 3 runs) and DINOv2->ResNet-50 distillation; DermaMNIST (AUC/ACC): DINOv2-vits14 0.903/0.727, -vitb14 0.905 \u00b1 0.025 / 0.725 \u00b1 0.034, -vitl14 0.901/0.732, MedAlmighty 0.905/0.735, ResNet-50 0.901/0.721. Also DINO-MX (Gokmen & Bumgardner, arXiv 2511.01610, Nov 2025): DINOv2-base linear probe 0.71 acc, kNN <= 0.80 (resolution/split unstated).",
+   "resolution": "28 px upsampled to 224 (MedAlmighty); unstated (DINO-MX)",
+   "top1": "72.5 - 73.5 (MedAlmighty); 0.71 LP / 0.80 kNN (DINO-MX)",
+   "auc": "0.905 (DINOv2-B) - the '0.905' that web snippets attribute to DINOv2 on DermaMNIST is this AUC, not accuracy",
+   "split": "official 7,007 / 1,003 / 2,005 (MedAlmighty); unstated (DINO-MX)",
+   "source": "https://www.frontiersin.org/journals/artificial-intelligence/articles/10.3389/frai.2025.1527980/full ; https://arxiv.org/abs/2511.01610",
+   "verified": true,
+   "caveat": "Frozen-backbone DINOv2 on upsampled 28-px images is no better than ResNet-50; irrelevant as a ceiling but clarifies the misleading snippet."
+  },
+  {
+   "method": "Other 2025-26 architecture papers at 224 (all below 82): MedViTV2 (Manzari et al., Applied Soft Computing 2025, arXiv 2502.13693; GitHub README) tiny/small/base/large 78.1 / 79.2 / 80.8 / 81.7; MedKAN-B (arXiv 2502.18416, Adam 1e-4 wd 1e-4, batch 64, <=150 epochs, early stopping) 0.803 / AUC 0.950 (MedKAN-S 0.776, -L 0.780; column mapping from garbled table); MedMamba-T (arXiv 2403.03849) 0.779 / 0.917; HamVision (arXiv 2603.21377) 77.96 / 93.66; KEM (2025, knowledge-enhanced, from the MKG-CARE table) 81.7 / 95.8; Amangeldi et al. (arXiv 2505.08259, from notes) ViT-S/16 81.56, ResNet-18 80.26.",
+   "resolution": "224 (almost certainly 28-px images upsampled; none states MedMNIST+)",
+   "top1": "77.9 - 81.7",
+   "auc": "0.917 - 0.958",
+   "split": "official (MedViTV2/MedKAN state MedMNIST pre-split data)",
+   "source": "https://github.com/Omid-Nejati/MedViTV2 ; https://arxiv.org/abs/2502.18416 ; https://arxiv.org/abs/2403.03849 ; https://arxiv.org/abs/2603.21377 ; https://arxiv.org/abs/2505.08259",
+   "verified": false,
+   "caveat": "MedViTV2 (README) and MedKAN (arXiv HTML) read directly; MedMamba, HamVision, KEM numbers come from search snippets / the MKG-CARE table and were not re-read in their primary sources. All train custom architectures largely from scratch; none exceeds 82."
+  },
+  {
+   "method": "Zhang & Li, 'Weighted Sampling with Frequency-Aware Spatial Attention for Imbalanced Image Classification', J. Imaging 12(7):293, 2026: ResNet-18 ImageNet-pretrained, 28 px resized to 96 px, AdamW 1e-4 wd 0.05, cosine with 5 warmup epochs, label smoothing 0.1, 30 epochs, batch 128, 3 seeds. Test (overall acc / macro acc / macro-F1 / AUC): Vanilla 0.779\u00b10.002 / 0.579 / 0.586 / 0.920; CBAM 0.781 / 0.585; Focal 0.775 / 0.565; WS 0.764 / 0.621; LDAM-DRW 0.661 / 0.614; LogitAdjust (trained) 0.477\u00b10.013 / 0.602 / 0.393 / 0.876; FSA 0.757 / 0.568 / AUC 0.935; WSFSA 0.735 / 0.633 / 0.587 / 0.908.",
+   "resolution": "96 (from 28); a 224 variant mentioned but values not extracted",
+   "top1": "77.9 (vanilla ResNet-18@96)",
+   "auc": "0.920; macro (balanced) accuracy 0.579",
+   "split": "official 7,007 / 1,003 / 2,005",
+   "source": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13413053/ (DOI 10.3390/jimaging12070293)",
+   "verified": true,
+   "caveat": "Below threshold; listed because it is one of the very few peer-reviewed sources reporting balanced (macro) accuracy on the official split, and because its trained logit-adjustment variant collapses overall accuracy - relevant to this project's logit-adjusted decision rule (post-hoc adjustment on a tuned ensemble behaves very differently, cf. the GitHub ResNet-50 run)."
+  },
+  {
+   "method": "Augmentation evidence on DermaMNIST: SAFLEX (arXiv 2410.02512, 2024; ResNet-18, 28 px, Adam, 100 epochs, MedMNIST protocol): No-Aug 76.14 \u00b1 0.09; RandAugment 73.71 \u00b1 0.33; Mixup 75.22 \u00b1 0.45; crop 76.61 \u00b1 0.14; Soft-Aug 77.05 \u00b1 0.24; SAFLEX 76.69 / 76.94. MedMNIST-C (Di Salvo et al., arXiv 2406.17536, 2024; ImageNet-init AlexNet/ResNet-50/DenseNet-121/ViT-B/16/VGG16 on MedMNIST+ 224, AdamW 1e-4 cosine, 100 epochs, early stopping on val, 3 seeds): for a ResNet-18 the AUC gain on CORRUPTED DermaMNIST test sets is CutMix -0.7, MixUp +3.0, RandAugment +4.1, their corruption-based aug +16.3; clean DermaMNIST accuracy is not reported per dataset.",
+   "resolution": "28 (SAFLEX); 224 (MedMNIST-C)",
+   "top1": "n/a (recipe evidence)",
+   "auc": "see method",
+   "split": "official",
+   "source": "https://arxiv.org/abs/2410.02512 ; https://arxiv.org/abs/2406.17536",
+   "verified": true,
+   "caveat": "At 28 px heavy augmentation (RandAugment, Mixup) HURTS DermaMNIST accuracy; at 224 px the evidence is only about robustness, not clean accuracy. No paper found that ablates mixup/cutmix/RandAugment/label smoothing/TTA on DermaMNIST-224 clean accuracy."
+  },
+  {
+   "method": "HAM10000 CONTEXT - ISIC 2018 Task 3 (lesion diagnosis, 7 classes, train = HAM10000 10,015; val 193; hidden test 1,512 = 1,196 'internal' + 316 'external' images from unseen institutions; primary metric = balanced multiclass accuracy (mean per-class recall), AUC tie-break; external dermoscopic data allowed if declared). Codella et al. Table 2 (ALL test, ACC / BACC): rank 1 0.851 / 0.885; rank 2 0.850 / 0.882; rank 3 0.827 / 0.871 (all three = MetaOptima: top-10-models averaged, meta-ensemble, best single); rank 4 0.896 / 0.856 (DAISYLab, Gessert et al. arXiv 1808.01694: ensemble of fine-tuned DenseNet/SENet/ResNeXt, unscaled multi-crop evaluation, loss weighting + balanced batch sampling, meta-learning); rank 5 0.884 / 0.845 (Sun Yat-sen Univ.: SENet + PNASNet ensemble with test-time augmentation, NO external data). Live leaderboard: 1 MetaOptima 0.885 (ext. data yes), 2 DAISYLab 0.856 (yes), 3 SYSU 0.845 (no), 4 'Li' densenet 0.815, 5 Ask Sina 0.812, 6 RECOD Titans (15-model average, challenge data only) 0.803, 9 vess (ResNeXt101 + DPN92 snapshot ensemble, D4 TTA) 0.784. Rank-1 per-class AUC: MEL 0.949, NV 0.979, BCC 0.997, AKIEC 0.987, BKL 0.974, DF 0.992, VASC 1.000; its external-partition BACC (0.925) exceeded internal (0.875).",
+   "resolution": "full-resolution dermoscopy (600x450 originals), various",
+   "top1": "ACC 0.851 / BACC 0.885 (winner); best without external data BACC 0.845",
+   "auc": "per-class 0.95 - 1.00 (rank 1)",
+   "split": "ISIC 2018 official hidden test (1,512), a different and partly out-of-distribution test set; not comparable to the DermaMNIST test split",
+   "source": "https://arxiv.org/abs/1902.03368 (Codella et al. 2019, Table 2, PDF read) ; https://challenge.isic-archive.com/leaderboards/2018/?task=47 ; https://arxiv.org/abs/1808.01694",
+   "verified": true,
+   "caveat": "Top entries used external data and very large ensembles; the challenge paper notes that ranking by accuracy vs balanced accuracy differs substantially and that most submissions overfit internal data."
+  },
+  {
+   "method": "HAM10000 CONTEXT - lesion-disjoint 7-class: Yu, 'Calibrated selective referral for skin lesion AI on HAM10000', Sci Rep 16:36497 (11 Aug 2026): ResNet-50 ImageNet, 224 px, lesion-level grouped split 6,413 / 1,605 / 1,997 images (no lesion overlap), Adam, head 8 epochs @1e-3 then fine-tune 20 epochs @1e-5 unfreezing last 40 layers (BN frozen), batch 8, flips / brightness-contrast 0.9-1.1 / central crop 0.9-1.0, inverse-frequency weighted CE, early stopping on val loss patience 5, selection by val macro-F1 (0.630), temperature scaling. Internal lesion-disjoint test: ACC 0.745, BA 0.673, macro-F1 0.625, macro AUROC 0.941; ISIC 2018 Task 3 test (1,512): ACC 0.731, BA 0.659, macro-F1 0.639, AUROC 0.933. Quote: 'Lesion-level splitting is therefore a core validity requirement rather than a technical detail.'",
+   "resolution": "224",
+   "top1": "74.5 (ACC); balanced accuracy 67.3",
+   "auc": "0.941 macro AUROC",
+   "split": "lesion-level grouped split (seeds 42/43); external ISIC 2018 test",
+   "source": "https://doi.org/10.1038/s41598-026-64721-3",
+   "verified": true,
+   "caveat": "Small batch / short schedule, so this is a lower bound; but it is a peer-reviewed lesion-disjoint reference point: BA ~0.67 vs ~0.80-0.85 on leaky image-level splits."
+  },
+  {
+   "method": "HAM10000 CONTEXT - leakage magnitude (UNPUBLISHED GitHub, nitaid/ham10000-lesion-classification): ImageNet ResNet-18, class weighting + augmentation, model selection on validation balanced accuracy, 3 seeds: lesion-disjoint test (1,431 images) BA 0.730 \u00b1 0.042 (melanoma recall 0.753) vs image-level 'leaky' split BA 0.838 \u00b1 0.007; inside the leaky test set, images whose lesion was seen in training score BA 0.873 vs 0.798 for unseen lesions (melanoma recall 0.85 vs 0.60). A second repo (jackdoesjava/ham-triage) reports 0.689 BA lesion-disjoint and 0.654 on ISIC 2018.",
+   "resolution": "not stated",
+   "top1": "BA 0.730 (clean) vs 0.838 (leaky)",
+   "auc": "not reported",
+   "split": "lesion-disjoint vs image-level random split of HAM10000",
+   "source": "https://github.com/nitaid/ham10000-lesion-classification ; https://github.com/jackdoesjava/ham-triage",
+   "verified": true,
+   "caveat": "Not peer reviewed, but the seen-vs-unseen-lesion breakdown (+7.5 BA) is exactly the diagnostic this project should run on the official DermaMNIST test split using HAM10000 lesion_id metadata (DermaMNIST-C.csv maps images to lesions)."
+  }
+ ],
+ "notes": "SCOPE AND METHOD. Searched for every DermaMNIST result at 128/224 px on the official split with top-1 >= 82, plus HAM10000 7-class context. Numbers were read in primary sources wherever possible: arXiv HTML text (Wu & Papiez, MedMNIST+, MKG-CARE, LiteMed-ViT, SAFLEX, MedMNIST-C, DINO-MX, MedKAN), PDFs read page by page (Codella et al. ISIC 2018 summary; Tanvir IJCA), publisher HTML via the cookie-bypass URL (Sanap/Springer; Yu/Sci Rep; MedFuse and MedAlmighty/Frontiers), Europe PMC full-text XML (MedNet Table 1), PMC (BiomedGPT Extended Data Table 1), and raw GitHub code (MedMNIST+ train.py/config.yaml/evaluate.py/main.py; MedMNIST v2 train_and_eval_pytorch.py; BiomedGPT train_medmnist.sh; Sanap results CSV; timm adamw.py). Gaps: Semantic Scholar API returned HTTP 429 on all three attempts; the arXiv API sweep (18 DermaMNIST-titled papers 2021-2026) and the two SOTA2 leaderboards (72 entries) surfaced no further >= 82 claims; Wu & Papiez have no code and no OpenReview/PMLR record; the BiomedGPT split and the MedNet source resolution could not be established; Sanap's Table 6 was not extracted (numbers come from Sec. 3.4 text and the repo CSV, which agree). No personal data was sent to any service.\n\n(a) WU & PAPIEZ, arXiv 2501.14685 - PROTOCOL AUDIT. v1 only (24 Jan 2025); PDF carries the PMLR 'Under Review for MIDL 2025' header; arXiv comment 'submitted to MIDL2025'; no published version found. Backbones: VGG16, ResNet-18, DenseNet-121, EfficientNet-B4 (IN-1k), ViT-B/16 (IN-21k->1k), CLIP ViT-B/16, SAM-C, SAM, EVA-02 ViT-B/14 (IN-22k), OpenAI ViT-B/16, DINO ViT-B/16, DINOv2 ViT-B/14 (LVD-142M), all with a one-layer linear head. Training: AdamW, 15,000 iterations (batch size never given, so epochs unknown: at batch 32 that is ~68 epochs, at 64 ~137), head LR 1e-3 decayed x0.9 every 200 iterations, encoder LR constant from a grid, 'lr_e = 1e-5 proves to be the best choice in most cases' for ViTs, ~1e-4 for CNNs; CE loss; 3 runs on one A100. The words 'validation' (as a split), 'early stop', 'checkpoint', 'test set', 'batch', 'epoch', 'augment', 'crop', 'normaliz' and 'weight decay' do not occur in the body; 'validation' is used only in the sense of 'validating foundation models on MedMNIST'. They do not say whether the reported number is the last iterate or a selected iterate, nor on which split the encoder LR was chosen; the App. B figures are 12 unlabeled accuracy-vs-LR plots. Resolution: 'primarily use images of 224x224 for testing' (MedMNIST 224 release); the resize study on DermaMNIST compares zero-padding vs scaling at 28/64/128 and states scaling is better for end-to-end, but the paper prints two different 28/64/128 tables (Sec. 4 and App. D) with different values and never says which is scale and which is pad. No leakage discussion. Their own explanation of the gap to MedMNIST+: 'adopted a different training pipeline'. Verdict: the numbers are internally consistent at 224 and are corroborated in magnitude by independent 2025-26 sources (Sanap: ViT-Base 90.57 single seed, ConvNeXt-Base 89.48; Tanvir: Swin-B 89.3; LiteMed-ViT: ResNet-18 89.98), so ~89-92 single-model accuracy at 224 on the official (leaky) split is believable; but the DINOv2 92.02 specifically remains unaudited and should be cited as 'preprint, protocol under-specified, no validation-based selection reported'. Note for the report: the literature notes' line 'ResNet-18 @64->224 84.80 \u00b1 1.09' is wrong - 84.80 is the 64-px entry of their Sec. 4 table; ResNet-18 at 224 is 86.05 \u00b1 0.78.\n\n(b) MEDMNIST+ SUPPLEMENTARY TABLE S4 (DermaMNIST), 128 / 224 columns, ACC and AUC in %, mean \u00b1 std over 3 seeds (ACC at operating point 0.5). End-to-end ACC@128 | ACC@224 | AUC@128 | AUC@224: VGG16 81.80\u00b11.29 | 81.55\u00b11.89 | 95.71\u00b10.46 | 95.51\u00b10.69; AlexNet 80.42\u00b10.75 | 82.04\u00b11.19 | 95.13\u00b10.25 | 96.10\u00b10.09; ResNet-18 79.19\u00b10.51 | 82.33\u00b10.36 | 93.46\u00b10.39 | 95.27\u00b10.27; DenseNet-121 81.76\u00b10.25 | 84.74\u00b10.51 | 95.71\u00b10.19 | 96.26\u00b10.06; EfficientNet-B4 73.83\u00b10.30 | 76.38\u00b11.29 | 89.32\u00b10.16 | 91.88\u00b10.85; ViT-B/16 80.81\u00b10.89 | 82.31\u00b11.36 | 95.89\u00b10.30 | 96.28\u00b10.67; CLIP ViT-B/16 74.73\u00b10.42 | 75.31\u00b10.28 | 92.51\u00b10.14 | 92.59\u00b10.26; EVA-02 ViT-B/16 76.41\u00b10.46 | 77.94\u00b10.29 | 92.63\u00b10.33 | 93.23\u00b10.33; DINO ViT-B/16 79.22\u00b11.56 | 81.31\u00b11.05 | 95.34\u00b10.41 | 96.50\u00b10.51; SAM ViT-B/16 76.71\u00b11.06 | 77.42\u00b10.17 | 90.66\u00b11.36 | 92.60\u00b10.65. Linear probing: VGG16 75.38\u00b10.16 | 75.99\u00b10.13 | 90.53\u00b10.01 | 92.03\u00b10.01; AlexNet 77.11\u00b10.15 | 78.90\u00b10.23 | 92.81\u00b10.03 | 94.01\u00b10.06; ResNet-18 70.57\u00b10.14 | 71.19\u00b10.12 | 86.44\u00b10.01 | 88.38\u00b10.02; DenseNet-121 77.39\u00b10.12 | 77.06\u00b10.18 | 92.15\u00b10.05 | 93.18\u00b10.04; EfficientNet-B4 72.97\u00b10.04 | 73.23\u00b10.06 | 89.70\u00b10.01 | 90.51\u00b10.01; ViT-B/16 80.90\u00b10.25 | 82.01\u00b10.02 | 95.05\u00b10.02 | 95.88\u00b10.03; CLIP 80.28\u00b10.31 | 81.93\u00b10.31 | 94.89\u00b10.03 | 95.92\u00b10.06; EVA-02 77.17\u00b10.10 | 79.29\u00b10.02 | 93.88\u00b10.05 | 94.69\u00b10.03; DINO 81.65\u00b10.66 | 84.42\u00b10.23 | 95.95\u00b10.17 | 96.83\u00b10.07; SAM 66.88\u00b10.00 | 66.88\u00b10.00 | 72.64\u00b10.46 | 69.34\u00b10.33. kNN (k=11) ACC@128 | @224: VGG16 72.57 | 71.67; AlexNet 74.16 | 74.66; ResNet-18 71.37 | 73.07; DenseNet-121 72.67 | 73.17; EfficientNet-B4 71.87 | 71.72; ViT-B/16 72.62 | 75.21; CLIP 73.52 | 74.46; EVA-02 74.11 | 75.61; DINO 76.51 | 78.35; SAM 70.22 | 68.38. (28/64 columns are already in literature_notes.md and agree.) IMPORTANT for any 128-px comparison: in their pipeline 128-px images are zero-padded to 224 after normalization, not resized, so the 128 column underestimates what a resize-to-224 (or a native-128 input) pipeline achieves (Wu & Papiez's resize study says scaling > padding).\n\n(c) 2024-2026 PAPERS USING DINOv2 / ConvNeXt / Swin / EVA ON DERMAMNIST. DINOv2: Wu & Papiez 2025 (92.02 E2E, 83.97 LP @224); MedAlmighty 2025 (frozen, 72.5); MedFuse 2026 (frozen, 67.1 single, 74.7 fused); DINO-MX 2025 (LP 0.71, kNN 0.80). ConvNeXt: Sanap 2026 ConvNeXt-Base 89.48 / AUC 0.982; Tanvir 2025 ConvNeXt-B 87.1; MedFuse 2026 73.5; MKG-CARE's baseline table 67.0 (origin MedMamba paper); shared-backbone ConvNeXt-Tiny (arXiv 2609.06838) reports only an 11-task harmonic-mean macro-F1 0.733, no DermaMNIST number. Swin: Tanvir 2025 Swin-B 89.3 (best single there); Swin-T 77.8 / 93.8 in MedMamba/MKG-CARE tables; MedFuse Swin-T frozen 66.9. EVA-02: Wu & Papiez 88.79 E2E / 82.70 LP @224 (ViT-B/14, IN-22k); MedMNIST+ 77.94 E2E / 79.29 LP (eva02_base_patch16_clip_224). No DermaMNIST result found for SigLIP, DINOv3, ConvNeXt-V2 or Swin-V2. Non-official-split: Alwakid 2026 (EfficientNet-B0 + GAT, 88.35 on DermaMNIST-C).\n\n(d) FAIRNESS: EXACT PROTOCOLS TO MATCH OR EXCEED. MedMNIST+ (code-verified): timm pretrained=True; AdamW lr 1e-4 (wd = timm default 1e-2, not set explicitly); CosineLRScheduler over 100 epochs, single cycle, no warmup; batch 64; early stopping on val loss, patience 5; lowest-val-loss checkpoint evaluated once on test; CE; no augmentation; ToTensor -> Normalize(model default mean/std) -> zero-pad to 224; 3 seeds 9930641 / 115149041 / 252139603; ACC via medmnist getACC (argmax), AUC via medmnist getAUC (macro one-vs-rest). MedMNIST v2 (code-verified): Adam 1e-3, MultiStepLR x0.1 at 50%/75% of 100 epochs, batch 128, no augmentation, Normalize(0.5, 0.5), 224 inputs = 28-px images resized with PIL NEAREST, checkpoint = best VALIDATION AUC. Wu & Papiez: see (a). Sanap: Adam, 2e-5 (ViT) / 1e-4 (CNN), batch 4, <= 30 epochs, early stop on val accuracy (patience 7), ReduceLROnPlateau, no augmentation, one seed. Tanvir: AdamW 1e-4 wd 1e-2, 1% warmup, batch 32, <= 20 epochs, early stop on val (patience 2), no augmentation, one seed. BiomedGPT: 384-px inputs, 5 epochs, lr 5e-5, Adam wd 0.01, warmup ratio 0.6 polynomial decay, label smoothing 0.1, dropout 0.1, drop-path 0.1, best checkpoint by validation score. LiteMed-ViT ResNet-18: AdamW 3e-4, wd 1e-4, cosine, batch 128, 30 epochs, flips + <=15 deg rotation. To compare fairly with MedMNIST+ the project should (i) re-run its exact recipe on the chosen backbones as a control, and (ii) report its own recipe with >= 3 seeds, validation-only selection and a single test pass.\n\nCROSS-CUTTING CONCLUSIONS FOR THE PAPER. 1) The phase target (>= 87 top-1, macro-AUC >= 0.97, BA >= 75 at 224) is NOT 'clearly superior' to the literature on the official split: single ImageNet/SSL ViT-B, ConvNeXt-B, Swin-B and even ResNet-18 reach 89-91 (Sanap, Tanvir, LiteMed-ViT), Wu & Papiez claim 92.0 for DINOv2, ensembles reach 90.9-91.7, macro-AUC 0.98-0.99 is routine for ViT-B-class models, and balanced accuracy on the same split is 83.2 (ViT-Base), 83.3 (soft voting) and 84.9 (stacking) in Sanap (single seed), ~80.6 in Tanvir (derived) and 79.2 in a GitHub ResNet-50+TTA run. The real ceiling on the official split is therefore ~92 top-1 / ~85 BA, and only MedMNIST+ (84.74) is a soft target. 2) The only numbers with a credible multi-seed, validation-selected, code-released protocol are MedMNIST+ (low because of val-loss early stopping + no augmentation) and, partially, Sanap (published test probabilities but one seed). This is the opening for the paper: a reproducible, multi-seed, probability-released protocol at 128/224 with calibration, balanced accuracy and a lesion-level leakage analysis - not a higher headline number. 3) Leakage: 13.47% of lesions span partitions and 886 images / 641 lesions are involved in train-test overlap (Abhishek et al.); higher resolution and larger models can memorize same-lesion near-duplicates, which plausibly inflates every 224-px result above (the nitaid repo measures +7.5 BA for seen-lesion vs unseen-lesion test images, Yu 2026 gets BA 0.67 lesion-disjoint vs 0.80-0.85 on leaky splits). A peer-review-proof evaluation should report: official split (for comparability), the test split stratified into seen-lesion vs unseen-lesion images (HAM10000 lesion_id via DermaMNIST-C.csv / HAM10000 metadata), and DermaMNIST-C and -E results (Zenodo 12739457 ships only 28 and 224 npz files, so 128-px -C/-E must be produced by downsampling the 224 files). 4) Metric hygiene: balanced accuracy is almost never reported for DermaMNIST; report it with per-class recall, and note that trained logit-adjustment (J Imaging 2026) and class weighting (GitHub ResNet-50) trade 0.8-30 points of top-1 for BA, so the paper should show the acc/BA Pareto front rather than one operating point. 5) Compute: everything above is reachable on a T4 - Sanap trained ViT-Base at batch 4; MedMNIST+ ran 100 epochs at batch 64 on one A5000; LiteMed-ViT's ResNet-18@224 took 30 epochs.",
+ "recipe_ingredients": [
+  "Native 224-px MedMNIST+ images (dermamnist_224.npz) rather than upsampled 28-px: resolution is the single largest lever in every source (MedMNIST+ ResNet-18 73.4@28 -> 82.3@224; LiteMed-ViT ResNet-18 77.4 -> 90.0; Wu & Papiez 77.7 -> 86.1; MedNet 75.8@28 -> 82.0@224 -> 84.0@384). If 128 px is used, resize (scale) rather than zero-pad to the model input (Wu & Papiez Sec. 4.1).",
+  "ImageNet / large-scale pretrained backbone fine-tuned END-TO-END, not linear-probed: end-to-end beats linear probing by 4-8 points at 224 in both benchmarks; strongest families are ViT-B-class self-supervised or vision-language encoders (DINOv2 92.0, CLIP/OpenAI/ViT-B/16-21k/DINO 89.4-89.7 in Wu & Papiez; ViT-Base 90.6 in Sanap), ConvNeXt-B (89.5), Swin-B (89.3), with DenseNet-121 (84.7-87.7) and ResNet-18 (86-90) as cheap CNN baselines; EfficientNets are the most recipe-sensitive (76.4 vs 88.1 for B4).",
+  "Two learning rates: small encoder LR (1e-5 for ViTs, 1e-4 for CNNs; Sanap 2e-5 ViT / 1e-4 CNN; MKG-CARE 5e-5) and a 10-100x larger LR for the new head (Wu & Papiez head 1e-3 step-decayed x0.9/200 it; 'discriminative LRs' in the 87.0 ResNet-50 run; BiomedGPT 5e-5 with 60% warmup).",
+  "AdamW with modest weight decay (1e-4 to 2e-2) and a cosine or step schedule with a short warmup (Tanvir 1%; J Imaging 5 epochs); batch sizes 32-64 are typical (MedMNIST+ 64, Tanvir 32, MedNet 64, BiomedGPT 64x4), Sanap's batch 4 shows large batches are not required.",
+  "Train long enough and select the checkpoint on validation ACCURACY / macro-F1 / AUC, not validation loss: MedMNIST+'s val-loss early stopping (patience 5) with zero augmentation is the one protocol that lands 4-8 points below everyone else with identical backbones; MedMNIST v2 selects best val AUC, Sanap best val accuracy (patience 7), Yu 2026 val macro-F1, BiomedGPT best val score, Wu & Papiez a fixed 15k iterations.",
+  "Light geometric augmentation only, or none: the strongest 224-px results use no augmentation at all (Sanap, Tanvir, MedMNIST+, Wu unspecified) or flips + small rotations/shifts (LiteMed-ViT <=15 deg; Yarlagadda flips/rot90/4-px shifts; MedNet flips + shift-scale-rotate + mild colour + CLAHE; Yu flips + brightness/contrast 0.9-1.1 + crop 0.9-1.0). RandAugment and Mixup lowered DermaMNIST accuracy at 28 px (SAFLEX: 76.1 -> 73.7 / 75.2); at 224 px MixUp/RandAugment only have evidence for corruption robustness (MedMNIST-C), CutMix none.",
+  "Mild regularisation on the head: label smoothing 0.1 (BiomedGPT, J Imaging), dropout 0.1-0.5 on the classifier (BiomedGPT 0.1, MKG-CARE 0.2/0.4, Tanvir 0.3, MedNet 0.4, Yarlagadda 0.5), stochastic depth 0.1 for ViT-class models (BiomedGPT).",
+  "Ensembling heterogeneous backbones by probability averaging adds +0.4 to +1.4 top-1 over the best member and improves calibration (Sanap soft voting 90.92 vs ViT 90.57, ECE 0.016; Tanvir late fusion 89.5 vs 89.3; Yarlagadda +1.1 with 5 ResNet-18 seeds; all ISIC 2018 top entries were ensembles, MetaOptima 'top 10 models averaged'); a stacking meta-learner fitted on validation predictions gives the highest accuracy (91.67) but worse calibration and depends on the 1,003-image validation set.",
+  "Multi-view / multi-crop test-time augmentation: ISIC 2018 ranks 2, 3 and 9 used unscaled multi-crop evaluation, test-time augmentation or D4 TTA; the 87.0% ResNet-50 run gains +0.1 acc but +2.9 balanced accuracy from 8-view TTA - TTA helps minority-class recall more than top-1.",
+  "Class-imbalance handling is what moves balanced accuracy: loss weighting + balanced batch sampling (Gessert ISIC 2018 2nd place), inverse-frequency weighted CE (ResNet-50 run: BA 76.3 vs 71.8 at -0.8 top-1; Yu 2026), focal loss (MedNet), logit-adjusted CE only for the auxiliary head (LiteMed-ViT: DF recall 0.00 -> 0.29, MEL 0.31 -> 0.56), temperature scaling; trained logit adjustment on a plain ResNet collapsed top-1 to 47.7 (J Imaging 2026), so tune the adjustment strength on validation and report the acc/BA trade-off curve.",
+  "Higher input than 224 gives a modest further gain for small CNNs (MedNet 384: +2.0 top-1 / +1.2 AUC over 224) but is not used by any of the >= 89% results; BiomedGPT fine-tunes 224-px images at 384.",
+  "Reporting protocol that survives review: >= 3 seeds with mean \u00b1 std (MedMNIST+, Wu, MedNet, LiteMed-ViT 4 seeds), all selection on the official validation split, one pass over the 2,005-image test split, released test probabilities (Sanap .npy), balanced accuracy + per-class recall + macro-AUC + calibration (ECE), and a lesion-level leakage analysis (seen- vs unseen-lesion test images; DermaMNIST-C/-E). Avoid training-set retrieval / kNN components at test time (MKG-CARE) because they can exploit the same-lesion overlap directly."
+ ]
+}

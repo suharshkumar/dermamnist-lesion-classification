@@ -88,3 +88,6 @@ heterogeneous EfficientNet ensemble with TTA**. Only claim it beats 80.0% if the
   references, Appendix A (10 Colab screenshots), Appendix B (Phase-1 log extracts).
   GitHub repo clone ../dermamnist-lesion-classification staged: phase1/, phase2/ (code, results, figures, docs), report/, README rewritten.
   Next: commit + push to github.com/suharshkumar/dermamnist-lesion-classification (user asked for the code to be on GitHub).
+- 2026-11-18 13:00  DONE. Prose rewritten in plain student voice (user request: no AI-sounding text, no code in report, screenshots as evidence).
+  Final: ../DDP_Final_Report_DermaMNIST.pdf (36 pp). Repo pushed: github.com/suharshkumar/dermamnist-lesion-classification (phase1/, phase2/, report/, README).
+  Colab notebook "Untitled3.ipynb" remains in the user's Drive with the full run output. Open items for next term are in report Section 13.

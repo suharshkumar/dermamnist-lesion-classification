@@ -1,0 +1,43 @@
+{
+ "label_agreement": "10015/10015",
+ "lesions_total": 7470,
+ "train_test": {
+  "lesions": 641,
+  "test_images": 693,
+  "train_images": 825
+ },
+ "train_val": {
+  "lesions": 332,
+  "val_images": 348
+ },
+ "val_test": {
+  "lesions": 113,
+  "test_images": 120
+ },
+ "all_three": {
+  "lesions": 40
+ },
+ "multi_partition_lesions": 1006,
+ "test_clean": {
+  "n": 1232,
+  "n_leaky": 773,
+  "class_counts_clean": [
+   35,
+   44,
+   107,
+   8,
+   70,
+   951,
+   17
+  ],
+  "class_counts_leaky": [
+   31,
+   59,
+   113,
+   15,
+   153,
+   390,
+   12
+  ]
+ }
+}
