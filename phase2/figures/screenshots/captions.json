@@ -1,0 +1,12 @@
+{
+ "01_colab_t4_runtime_start.jpg": "Colab session on a Tesla T4 GPU: TensorFlow 2.21 detects the GPU, the MedMNIST+ 64-px data (7,007 / 1,003 / 2,005 images) is loaded and member 1 starts its head phase.",
+ "02_member1_b0_96_head_phase_epochs.png": "Member 1 (EfficientNet-B0, 96 px), head phase: 110 steps per epoch at about 5 s per epoch once augmentation runs on the GPU; training accuracy rises from 61.7% to 73.0% over the first six epochs.",
+ "03_member1_head_phase_complete.jpg": "Member 1, end of the head phase: all 12 epochs logged (training accuracy 61.7% to 75.1%, loss 1.25 to 0.85), fine-tuning (epoch 1/30) begins.",
+ "04_member1_test_report_and_member2_start.jpg": "Member 1 finished: per-class test report with 8-view TTA (accuracy 0.8015, macro-F1 0.6185), then the EfficientNetV2-B0 ImageNet weights download and member 2's head phase begins.",
+ "05_member5_v2b1_128_finetune_epochs.jpg": "Member 5 (EfficientNetV2-B1, 128 px) fine-tuning: about 10 s per epoch; training accuracy climbs from 0.76 to 0.79 while validation accuracy is monitored for early stopping.",
+ "06_member5_report_and_equal_ensemble.jpg": "End of member 5 (test accuracy 0.7910), the list of the five members, and the start of the equal-weight ensemble report (top-1 82.59, top-3 98.00).",
+ "07_ensemble_point_A_report.jpg": "Validation-tuned ensemble at operating point A (tau = 0): top-1 82.29%, top-3 97.91%, per-class precision/recall/F1 on the 2,005 test images.",
+ "08_ensemble_point_B_report.jpg": "Operating point B (tau = 0.15, the screening point): top-1 82.64%, top-3 97.91%; melanoma recall 46.6%, dermatofibroma recall 60.9%, nevus recall 94.1%.",
+ "09_ensemble_point_C_and_final_summary.jpg": "Operating point C (tau = 0.45, balanced): top-1 79.95% with balanced accuracy 71.63%; the results archive (1,379 KB) and the final JSON summary line close the run.",
+ "05a_member4_b1_112_end_and_report.jpg": "Member 4 (EfficientNet-B1, 112 px): last fine-tuning epochs (training accuracy 0.828) and its test report: 81.70% top-1 with TTA, the best single model (macro-F1 0.660)."
+}

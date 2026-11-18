@@ -1,0 +1,25 @@
+Colab run, 2026-11-18 (Tesla T4, TensorFlow 2.21, Python 3.13) — prime_colab.py, 5 members on 64-px DermaMNIST
+Notebook: Untitled3.ipynb in the user's Drive (id 1Yiz7vyWw7lfm3munhx-aJWpjnBbzergL). Full epoch logs are in each member's results.json (history_head / history_ft).
+
+== b0_96:     val TTA 81.16  test std 79.05  test TTA 80.15  top3 97.21  bal 57.01  (4.0 min)  head 12 ep, ft 15 ep (early stop)
+== v2b0_96:   val TTA 80.96  test std 77.81  test TTA 79.20  top3 96.76  bal 53.54  (4.4 min)  head 12, ft 22
+== b0_96_sog: val TTA 79.86  test std 78.55  test TTA 80.30  top3 97.91  bal 59.56  (4.4 min)  head 12, ft 20
+== b1_112:    val TTA 81.66  test std 79.75  test TTA 81.70  top3 97.46  bal 61.78  (8.8 min)  head 12, ft 30
+== v2b1_128:  val TTA 80.76  test std 78.00  test TTA 79.10  top3 97.26  bal 49.78  (6.4 min)  head 11, ft 17
+
+members ['b0_96', 'v2b0_96', 'b0_96_sog', 'b1_112', 'v2b1_128']
+validation-tuned weights (0.1, 0.0, 0.3, 0.3, 0.3)   val top-1 0.8385
+
+== ensemble_equal            (tau=0.0)  top-1 82.59 top-3 98.00 bal 59.91 F1 65.70 AUC 0.9611
+== ensemble_tuned_A_accuracy (tau=0.0)  top-1 82.29 top-3 97.91 bal 60.17 F1 65.56 AUC 0.9623
+== ensemble_tuned_B_screening(tau=0.15) top-1 82.64 top-3 97.91 bal 66.20 F1 68.86 AUC 0.9623
+== ensemble_tuned_C_balanced (tau=0.45) top-1 79.95 top-3 97.91 bal 71.63 F1 65.04 AUC 0.9623
+
+Per-class recall (test), point B: AK 0.4545, BCC 0.7184, BK 0.6864, DF 0.6087, MEL 0.4664, NV 0.9411, VASC 0.7586
+Per-class recall (test), point C: AK 0.5152, BCC 0.7087, BK 0.6909, DF 0.7391, MEL 0.5516, NV 0.8777, VASC 0.9310
+Per-class recall (test), point A: AK 0.4091, BCC 0.6505, BK 0.6591, DF 0.3913, MEL 0.4170, NV 0.9605, VASC 0.7241
+Member b0_96 per-class recall: AK 0.5152, BCC 0.6311, BK 0.5227, DF 0.2609, MEL 0.3812, NV 0.9553, VASC 0.7241 (acc 0.8015, macro-F1 0.6185)
+Member b1_112 per-class recall: AK 0.4091, BCC 0.6505, BK 0.6136, DF 0.4783, MEL 0.5067, NV 0.9426, VASC 0.7241 (acc 0.8170, macro-F1 0.6599)
+
+ZIP /content/DDP_Phase2_results.zip 1379 KB
+FINAL_SUMMARY {"member:b0_96": {"top1": 0.8015, "top3": 0.9721, "balanced": 0.5701, "macro_f1": 0.6185, "auc": 0.9506}, "member:v2b0_96": {"top1": 0.792, "top3": 0.9676, "balanced": 0.5354, "macro_f1": 0.5794, "auc": 0.9441}, "member:b0_96_sog": {"top1": 0.803, "top3": 0.9791, "balanced": 0.5956, "macro_f1": 0.6241, "auc": 0.9489}, "member:b1_112": {"top1": 0.817, "top3": 0.9746, "balanced": 0.6178, "macro_f1": 0.6599, "auc": 0.9589}, "member:v2b1_128": {"top1": 0.791, "top3": 0.9726, "balanced": 0.4978, "macro_f1": 0.5466, "auc": 0.951}, "ensemble_equal": {"top1": 0.8259, "top3": 0.98, "balanced": 0.5991, "macro_f1": 0.657, "auc": 0.9611, "tau": 0.0}, "ensemble_tuned_A_accuracy": {"top1": 0.8229, "top3": 0.9791, "balanced": 0.6017, "macro_f1": 0.6556, "auc": 0.9623, "tau": 0.0}, "ensemble_tuned_B_screening": {"top1": 0.8264, "top3": 0.9791, "balanced": 0.662, "macro_f1": 0.6886, "auc": 0.9623, "tau": 0.15}, "ensemble_tuned_C_balanced": {"top1": 0.7995, "top3": 0.9791, "balanced": 0.7163, "macro_f1": 0.6504, "auc": 0.9623, "tau": 0.45}}

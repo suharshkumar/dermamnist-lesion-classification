@@ -1,0 +1,33 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1783962649.426723  632236 pluggable_device_factory.cc:305] Could not identify NUMA node of platform GPU ID 0, defaulting to 0. Your kernel may not have been built with NUMA support.
+I0000 00:00:1783962649.427856  632236 pluggable_device_factory.cc:271] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 0 MB memory) -> physical PluggableDevice (device: 0, name: METAL, pci bus id: <undefined>)
+loaded artifacts/single_b0
+  TTA pass 1/8
+  TTA pass 2/8
+  TTA pass 3/8
+  TTA pass 4/8
+  TTA pass 5/8
+  TTA pass 6/8
+  TTA pass 7/8
+  TTA pass 8/8
+
+Std  top-1 : 78.40%
+TTA  top-1 : 80.00%
+TTA  top-3 : 97.36%
+TTA  balanced : 54.87%
+
+                precision    recall  f1-score   support
+
+  Actinic Ker.     0.6333    0.2879    0.3958        66
+Basal Cell Ca.     0.6019    0.6311    0.6161       103
+   Benign Ker.     0.5902    0.5500    0.5694       220
+Dermatofibroma     0.4667    0.3043    0.3684        23
+      Melanoma     0.5758    0.4260    0.4897       223
+          Nevi     0.8753    0.9523    0.9121      1341
+      Vascular     0.8696    0.6897    0.7692        29
+
+      accuracy                         0.8000      2005
+     macro avg     0.6590    0.5487    0.5887      2005
+  weighted avg     0.7839    0.8000    0.7870      2005
+
+RESULTS_JSON {"tta_top1": 0.8, "tta_top3": 0.97356608478803, "tta_balanced": 0.5487475911753616}

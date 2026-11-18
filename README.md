@@ -1,5 +1,64 @@
 # Skin-Lesion Classification on DermaMNIST
 
+Dual Degree Project (DDP) — Indian Institute of Technology Madras.
+Seven-class dermatoscopic lesion classification on the **DermaMNIST** benchmark
+(MedMNIST v2 / MedMNIST+, derived from HAM10000), official split, **64x64 source images**.
+
+**Final report (Phase 1 + Phase 2, November 2026):** [`report/DDP_Final_Report_DermaMNIST.pdf`](report/DDP_Final_Report_DermaMNIST.pdf)
+
+## Headline results (official test split, 2,005 images)
+
+| System | Top-1 | Top-3 | Balanced acc. | Macro-AUC |
+|---|---|---|---|---|
+| Phase 1 (July 2026): EfficientNet-B0 @96 px + TTA | 80.00% | 97.36% | 54.87% | 0.949 |
+| **Phase 2: PRIME ensemble, point A (accuracy)** | 82.29% | 97.91% | 60.17% | 0.962 |
+| **Phase 2: PRIME ensemble, point B (screening, tau = 0.15)** | **82.64%** | 97.91% | **66.20%** | 0.962 |
+| Phase 2: PRIME ensemble, point C (balanced, tau = 0.45) | 79.95% | 97.91% | **71.63%** | 0.962 |
+| Best published 28/64-px result (VGG16 @64, MedMNIST+) | 79.53 ± 1.19% | — | — | 0.944 |
+
+PRIME-B vs Phase 1: 95% CI of the top-1 gain [+1.3, +4.0] points, exact McNemar p = 9e-5 (116 vs 63 discordant test images),
+13.2% relative error reduction, balanced accuracy +11.3 points, pooled malignant-class recall 45.7% → 53.1%.
+
+**PRIME** = **P**rior-corrected, **R**esolution-matched, heterogeneous Efficient-Net ensemble with TTA:
+five EfficientNet / EfficientNetV2 members (96–128 px inputs, one with Shades-of-Gray colour constancy),
+validation-tuned probability averaging, 8-view test-time augmentation, and a post-hoc logit adjustment
+`argmax_c [log p_c(x) − tau · log prior_c]` whose single exponent tau selects the operating point.
+All members were trained on a Colab T4 in about 30 minutes (`phase2/code/prime_colab.py`).
+
+## Repository
+
+```
+report/DDP_Final_Report_DermaMNIST.pdf   final report (36 pp): both phases, critical review, PRIME, statistics, 6-month plan, evidence appendices
+report/DDP_Report_DermaMNIST.pdf         Phase-1 summer report (July 2026; contains the errors corrected in the final report)
+phase2/code/prime_colab.py               Phase-2 training + ensemble + figures, single script for Colab GPU (commented)
+phase2/code/train_v2.py, ensemble_v2.py  the same pipeline split for the 8 GB laptop (resume-safe, per-stage processes)
+phase2/code/comparative_stats.py         bootstrap CIs, McNemar tests, per-class deltas, leaderboard
+phase2/code/prior_correction_np.py       zero-training logit adjustment of the archived Phase-1 probabilities
+phase2/code/build_report.py              builds the final report PDF from the result files (reportlab)
+phase2/results/                          every results JSON (members, ensemble, statistics) + Colab run summary
+phase2/figures/                          confusion matrices, tau trade-off, per-class recall, member curves, Colab screenshots
+phase2/docs/                             literature/benchmark notes with sources, project progress log
+phase1/code, phase1/logs                 Phase-1 training scripts and the complete July logs
+notebooks/                               original Phase-1 Colab notebooks
+```
+
+## Reproduce Phase 2
+
+Open a Colab GPU runtime and run `phase2/code/prime_colab.py` (it downloads `dermamnist_64.npz` from the
+MedMNIST+ Zenodo record and verifies its MD5). The script writes per-member probabilities, `ensemble_v2_results.json`
+and all figures to `/content/DDP_Phase2`, then zips them. `phase2/code/import_colab_results.sh <zip>` unpacks the archive
+and rebuilds the report; `comparative_stats.py` recomputes the statistics from the saved probabilities.
+
+## Next term (6-month plan, Section 13 of the report)
+
+Native 128/224-px MedMNIST+ data and full-resolution HAM10000 (target ≥ 85% top-1 at 224 px), leakage-free evaluation on
+DermaMNIST-C/-E, a preprocessing pipeline (hair removal, colour constancy, lesion cropping), calibration + conformal
+prediction sets, skin-tone-stratified fairness evaluation, an on-device prototype, and a workshop paper.
+
+---
+
+## Phase 1 (summer 2026) summary
+
 Dual Degree Project (DDP), Summer 2026 — Indian Institute of Technology Madras.
 Seven-class dermatoscopic lesion classification on the **DermaMNIST** benchmark
 (derived from HAM10000), built to beat the published MedMNIST v2 baseline.
