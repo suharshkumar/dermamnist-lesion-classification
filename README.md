@@ -25,6 +25,24 @@ validation-tuned probability averaging, 8-view test-time augmentation, and a pos
 `argmax_c [log p_c(x) − tau · log prior_c]` whose single exponent tau selects the operating point.
 All members were trained on a Colab T4 in about 30 minutes (`phase2/code/prime_colab.py`).
 
+
+## Phase 3 (November 2026, in progress): native 224-px data, modern backbones, pre-registered evaluation
+
+Phase 3 moves to the 224-pixel MedMNIST+ release and fine-tunes ConvNeXt-T, DINOv2 ViT-B/14 and ViT-S/14, EfficientNetV2-S and a
+DenseNet-121 reproduction row with a modern recipe (layer-wise LR decay, mixup/CutMix, label smoothing, stochastic depth, EMA weights,
+8-view dihedral TTA, equal-weight ensembling, prior-corrected decision rule). Selection rules were fixed in `phase3/docs/PREREGISTRATION.md`
+before the ensemble was evaluated. Every system is also scored on the lesion-clean test subset (1,232 images whose lesion never appears
+in training or validation) and on the leakage-free DermaMNIST-E test split. Results, the Phase-3 report and the paper will be added here
+when session 2 (seeds, ablations) is complete.
+
+```
+phase3/code/prime3_colab.py          training + ensemble + figures on a Colab T4 (PyTorch, timm, kornia)
+phase3/code/eval_external_colab.py   zero-shot evaluation on DermaMNIST-E with the saved weights
+phase3/code/stats_phase3.py          lesion-clean subset, cluster bootstrap, calibration, melanoma operating points, McNemar
+phase3/docs/PREREGISTRATION.md       endpoints and selection rules (timestamped)
+phase3/research/                     literature sweep with sources, evaluation protocol, publication standards, leakage audit
+```
+
 ## Repository
 
 ```
